@@ -1,14 +1,14 @@
 Economic Well-Being Predictor
 
  
-Built By
+Built By: 
 Deborah Shakioye Adeniji [Deborah Shakioye Adeniji](https://www.linkedin.com/in/deborah-shakioye-adeniji-132394345/)  
-Machine learning explorer, powered by curiosity and the incredible training at [Tech Institution Name].
+Machine learning explorer, powered by curiosity and the incredible training at Panthera Tech School.
 Let’s connect and explore how data can shape better financial futures!
 
 Overview
 This machine learning app predicts economic well-being based on five key factors: Employment, Housing, Education, Spending, and Access.  
-Built with **LightGBM**, **Streamlit**, and **Zindy Data**, it offers real-time classification into “Secure” or “Vulnerable.”
+Built with *Sklearn**, **Streamlit**, and **Zindy Data**, it offers real-time classification into “Secure” or “Vulnerable.”
 
  Tech Stack
 - Python
