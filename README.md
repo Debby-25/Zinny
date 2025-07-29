@@ -1,6 +1,9 @@
 Economic Well-Being Predictor
+
+ 
 Built By
-[Deborah Shakioye Adeniji](https://www.linkedin.com/in/deborah-shakioye-adeniji-132394345/)  
+Deborah Shakioye Adeniji [Deborah Shakioye Adeniji](https://www.linkedin.com/in/deborah-shakioye-adeniji-132394345/)  
+Machine learning explorer, powered by curiosity and the incredible training at [Tech Institution Name].
 Let’s connect and explore how data can shape better financial futures!
 
 Overview
@@ -30,8 +33,10 @@ Repo Structure
 - Predictive dashboard UI for quick results  
 - Feature input fields for dynamic testing  
 - ML model optimized for socio-economic indicators
+  
 
 Connect With Me
 Want to collaborate or share feedback?  
 - [LinkedIn: Deborah Shakioye Adeniji](https://www.linkedin.com/in/deborah-shakioye-adeniji-132394345/)
+  
 
