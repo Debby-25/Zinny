@@ -1,59 +1,54 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import joblib
 
-# Load your trained model and reference features
+# Load trained model and reference columns
 model = joblib.load('best_random_forest_model.pkl')
-reference_features = joblib.load('training_columns.pkl')
+reference_columns = joblib.load('training_columns.pkl')
 
-st.set_page_config(page_title="Economic Well-Being Predictor", layout="centered")
-st.title("Economic Well-Being Prediction")
-st.markdown("Use the form below to enter individual feature values and get a prediction.")
+st.set_page_config(page_title="Economic well being Predictor", layout="centered")
+st.title("Economic well being Prediction")
+st.markdown("Input region data manually or upload a CSV to predict the target outcome.")
 
-# =============================
-#  Step 1: Feature Input Form
-# =============================
-with st.form("input_form"):
-    country = st.selectbox("Country", ['Cameroon', 'Ghana', 'Nigeria', 'Tanzania', 'Zimbabwe'])
-    residence = st.selectbox("Residence Type", ['Urban', 'Rural'])
-    age = st.slider("Age", 18, 100, 30)
-    household_size = st.slider("Household Size", 1, 20, 5)
-    education_level = st.selectbox("🎓 Education", ['None', 'Primary', 'Secondary', 'Tertiary'])
-    employment_status = st.selectbox("Employment", ['Unemployed', 'Self-employed', 'Employed', 'Student'])
-    has_bank_account = st.radio("Bank Account", ['Yes', 'No'])
-    owns_property = st.radio("Owns Property", ['Yes', 'No'])
-    monthly_income = st.number_input("Monthly Income", min_value=0, step=10, value=100)
+# Sidebar for file upload
+uploaded_file = st.sidebar.file_uploader("📂 Upload CSV File", type=['csv'])
+
+if uploaded_file:
+    data = pd.read_csv(uploaded_file)
+    data_encoded = pd.get_dummies(data)
+    data_encoded = data_encoded.reindex(columns=reference_columns, fill_value=0)
+    predictions = model.predict(data_encoded)
+    data['Predicted_Target'] = predictions
+    st.subheader("Batch Prediction Results")
+    st.write(data)
+    st.download_button("Download CSV", data.to_csv(index=False), "predictions.csv", "text/csv")
+
+# Manual input form
+with st.form("manual_input"):
+    st.subheader("🔍 Manual Input")
+    
+    country = st.selectbox("Country", ['Nigeria', 'Kenya', 'Ghana'])
+    year = st.slider("Year", min_value=2000, max_value=2025, value=2023)
+    urban_rural = st.selectbox("Urban or Rural", ['Urban', 'Rural'])
+    lights = st.slider("Nighttime Lights", 0.0, 100.0, 20.0)
+    shoreline_dist = st.slider("Distance to Shoreline", 0.0, 100.0, 50.0)
+    # ... (add other inputs here)
 
     submit = st.form_submit_button("🔮 Predict")
 
-# =============================
-# Step 2: Preprocess + Predict
-# =============================
 if submit:
     input_dict = {
         'country': country,
-        'residence_type': residence,
-        'age': age,
-        'household_size': household_size,
-        'education_level': education_level,
-        'employment_status': employment_status,
-        'has_bank_account': 1 if has_bank_account == 'Yes' else 0,
-        'owns_property': 1 if owns_property == 'Yes' else 0,
-        'monthly_income': monthly_income
+        'year': year,
+        'urban_or_rural': urban_rural,
+        'nighttime_lights': lights,
+        'dist_to_shoreline': shoreline_dist,
+        # ... (fill in the rest)
     }
 
-    input_df = pd.DataFrame([input_dict])
-    input_df = pd.get_dummies(input_df)
-    input_df = input_df.reindex(columns=reference_features, fill_value=0)
-    st.write(input_df)
-    prediction = model.predict(input_df)[0]
-
-    # =============================
-    # ✅ Step 3: Display Result
-    # =============================
-    st.subheader("Result")
-    if prediction == 1:
-        st.success("The predicted well-being status is: **Likely Above Threshold**")
-    else:
-        st.warning("The predicted well-being status is: **Likely Below Threshold**")
+    df_input = pd.DataFrame([input_dict])
+    df_encoded = pd.get_dummies(df_input)
+    df_encoded = df_encoded.reindex(columns=reference_columns, fill_value=0)
+    prediction = model.predict(df_encoded)[0]
+    st.subheader("Prediction Result")
+    st.success(f"Predicted Target: {prediction}")
