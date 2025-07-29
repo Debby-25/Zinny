@@ -17,7 +17,8 @@ Built with **LightGBM**, **Streamlit**, and **Zindy Data**, it offers real-time 
 
 Try It Out
 **Live App:** [https://j8kjpqwjyhkj7zlasaxpb3.streamlit.app/]  
-**Codebase:** [https://github.com/deborah-dev/economic-wellbeing-predictor.git]
+**Codebase:** [https://github.com/Debby-25/Zinny
+/economic-wellbeing-predictor.git]
 
 Repo Structure
 - `app.py` – Main Streamlit script  
